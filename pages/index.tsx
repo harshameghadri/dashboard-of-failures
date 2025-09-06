@@ -1,4 +1,5 @@
 import React, { useMemo, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import {
@@ -184,8 +185,8 @@ const StatusPieChart: React.FC<StatusPieChartProps> = React.memo(({ data }) => {
   );
 });
 
-// Application Table Component
-const ApplicationTable: React.FC<ApplicationTableProps> = React.memo(({ applications }) => {
+// Application Table Component (Client-side only to avoid SSR issues)
+const ApplicationTableInternal: React.FC<ApplicationTableProps> = React.memo(({ applications }) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
@@ -327,6 +328,24 @@ const ApplicationTable: React.FC<ApplicationTableProps> = React.memo(({ applicat
       </CardContent>
     </Card>
   );
+});
+
+// Create client-side only ApplicationTable to avoid SSR issues with useReactTable
+const ApplicationTable = dynamic(() => Promise.resolve(ApplicationTableInternal), {
+  ssr: false,
+  loading: () => (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-lg">All Applications</CardTitle>
+        <p className="text-sm text-muted-foreground">Loading table...</p>
+      </CardHeader>
+      <CardContent>
+        <div className="h-32 flex items-center justify-center">
+          <div className="animate-pulse text-muted-foreground">Loading applications...</div>
+        </div>
+      </CardContent>
+    </Card>
+  ),
 });
 
 // Main Dashboard Component
