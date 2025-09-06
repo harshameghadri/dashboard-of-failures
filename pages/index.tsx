@@ -359,10 +359,10 @@ export default function Dashboard({ applications, error }: HomeProps) {
     const statusCounts = applications.reduce((acc, app) => {
       acc[app.status] = (acc[app.status] || 0) + 1;
       return acc;
-    }, {} as Record<string, number>);
+    }, {} as Record<ApplicationStatus, number>);
 
     return Object.entries(statusCounts).map(([status, count]) => ({
-      status,
+      status: status as ApplicationStatus,
       count,
       fill: STATUS_COLORS[status as keyof typeof STATUS_COLORS] || '#64748b',
     }));
