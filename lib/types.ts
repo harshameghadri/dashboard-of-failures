@@ -37,6 +37,13 @@ export interface ApiResponse {
   applications: Application[];
   error?: string;
   debug?: string;
+  debugDetails?: {
+    hasSpreadsheetId: boolean;
+    hasServiceAccountEmail: boolean;
+    hasPrivateKey: boolean;
+    spreadsheetIdValue: string;
+    serviceAccountEmailValue: string;
+  };
 }
 
 // Badge variants for UI components
