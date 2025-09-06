@@ -333,39 +333,54 @@ const ApplicationTable: React.FC<ApplicationTableProps> = React.memo(({ applicat
 export default function Dashboard({ applications: initialApplications, error }: HomeProps) {
   const [applications, setApplications] = useState(initialApplications);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasTried, setHasTried] = useState(false);
 
   // Try to fetch real data on the client side if we only have demo data
   useEffect(() => {
     const tryFetchRealData = async () => {
-      // Check if we have demo data (indicates we might want to fetch real data)
+      // Only try once and only if we haven't tried before and we have demo data
       const isDemoData = applications.length > 0 && applications[0]?.company === 'Google';
       
-      if (isDemoData && !isLoading) {
+      if (isDemoData && !isLoading && !hasTried) {
+        console.log('🔄 Attempting to fetch real data from Google Sheets...');
         setIsLoading(true);
+        setHasTried(true);
+        
         try {
           const response = await fetch('/api/get-applications');
+          console.log('📡 API response status:', response.status);
+          
           if (response.ok) {
             const data = await response.json();
+            console.log('📊 Received data:', data);
+            
             if (data.applications && data.applications.length > 0) {
               // Only update if we got different data (not demo data)
-              const isNewDemoData = data.applications[0]?.company === 'Google';
-              if (!isNewDemoData) {
+              const isStillDemoData = data.applications[0]?.company === 'Google';
+              if (!isStillDemoData) {
+                console.log('✅ Successfully loaded real Google Sheets data');
                 setApplications(data.applications);
+              } else {
+                console.log('ℹ️ API returned demo data, keeping current demo data');
               }
             }
+          } else {
+            console.error('❌ API request failed:', response.status, response.statusText);
           }
         } catch (error) {
-          console.log('Could not fetch real data, using demo data');
+          console.error('❌ Error fetching real data:', error);
         } finally {
           setIsLoading(false);
         }
       }
     };
 
-    // Fetch real data after a short delay to allow the page to render first
-    const timer = setTimeout(tryFetchRealData, 1000);
-    return () => clearTimeout(timer);
-  }, [applications, isLoading]);
+    // Only run once after initial render
+    if (!hasTried) {
+      const timer = setTimeout(tryFetchRealData, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [hasTried]); // Remove applications and isLoading from dependencies to prevent loops
   // Calculate dashboard statistics
   const stats: DashboardStats = useMemo(() => {
     const total = applications.length;

@@ -44,9 +44,15 @@ export default async function handler(
     const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
 
     if (!spreadsheetId || !serviceAccountEmail || !privateKey) {
-      console.log('No Google Sheets credentials found, using demo data');
+      console.log('❌ Missing Google Sheets credentials:', {
+        hasSpreadsheetId: !!spreadsheetId,
+        hasServiceAccountEmail: !!serviceAccountEmail,
+        hasPrivateKey: !!privateKey,
+        privateKeyLength: privateKey?.length || 0
+      });
       return res.status(200).json({ 
-        applications: DEMO_APPLICATIONS
+        applications: DEMO_APPLICATIONS,
+        debug: 'No Google credentials - using demo data'
       });
     }
 
@@ -146,12 +152,20 @@ export default async function handler(
     // Sort by dateApplied descending (most recent first)
     validApplications.sort((a, b) => new Date(b.dateApplied).getTime() - new Date(a.dateApplied).getTime());
 
-    console.log(`Successfully fetched ${validApplications.length} applications`);
+    console.log(`✅ Successfully fetched ${validApplications.length} applications from Google Sheets`);
+    console.log('📊 First application:', validApplications[0] ? {
+      company: validApplications[0].company,
+      position: validApplications[0].position,
+      status: validApplications[0].status
+    } : 'No applications found');
     
     // Add cache headers for better performance
     res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
     
-    return res.status(200).json({ applications: validApplications });
+    return res.status(200).json({ 
+      applications: validApplications,
+      debug: 'Real data from Google Sheets'
+    });
 
   } catch (error) {
     // More detailed error logging

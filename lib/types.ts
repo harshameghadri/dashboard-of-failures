@@ -36,6 +36,7 @@ export interface StatusCount {
 export interface ApiResponse {
   applications: Application[];
   error?: string;
+  debug?: string;
 }
 
 // Badge variants for UI components
