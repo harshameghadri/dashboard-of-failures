@@ -170,40 +170,62 @@ export default async function handler(
   } catch (error) {
     // More detailed error logging
     if (error instanceof Error) {
-      console.error('Error fetching applications:', {
+      console.error('🚨 Google Sheets API Error:', {
         message: error.message,
         stack: error.stack,
         name: error.name
       });
       
       // Provide more specific error messages based on error type
-      if (error.message.includes('permission') || error.message.includes('access')) {
+      if (error.message.includes('permission') || error.message.includes('access') || error.message.includes('403')) {
+        console.error('❌ Permission Error: Sheet not shared with service account or API not enabled');
         return res.status(500).json({ 
-          applications: [], 
-          error: 'Permission denied accessing spreadsheet' 
+          applications: DEMO_APPLICATIONS,
+          error: 'Permission denied: Sheet not shared with service account', 
+          debug: `Service account: dashboard-service@dashboard-failures.iam.gserviceaccount.com`
         });
       }
       
       if (error.message.includes('not found') || error.message.includes('404')) {
+        console.error('❌ Spreadsheet Not Found: Check spreadsheet ID');
         return res.status(500).json({ 
-          applications: [], 
-          error: 'Spreadsheet not found' 
+          applications: DEMO_APPLICATIONS,
+          error: 'Spreadsheet not found - check spreadsheet ID',
+          debug: `Spreadsheet ID: ${process.env.SPREADSHEET_ID}`
         });
       }
       
       if (error.message.includes('timeout') || error.message.includes('TIMEOUT')) {
+        console.error('❌ Timeout Error');
         return res.status(500).json({ 
-          applications: [], 
+          applications: DEMO_APPLICATIONS,
           error: 'Request timeout - please try again' 
         });
       }
-    } else {
-      console.error('Unknown error:', error);
-    }
 
-    return res.status(500).json({ 
-      applications: [], 
-      error: 'Failed to fetch applications' 
-    });
+      if (error.message.includes('Invalid JSON') || error.message.includes('private_key')) {
+        console.error('❌ Private Key Format Error');
+        return res.status(500).json({ 
+          applications: DEMO_APPLICATIONS,
+          error: 'Invalid private key format',
+          debug: 'Check private key formatting in environment variables'
+        });
+      }
+
+      // Return the actual error message for debugging
+      console.error('❌ Unknown Google Sheets Error:', error.message);
+      return res.status(500).json({ 
+        applications: DEMO_APPLICATIONS,
+        error: `Google Sheets API Error: ${error.message}`,
+        debug: `Full error: ${error.name} - ${error.message}`
+      });
+    } else {
+      console.error('❌ Unknown error type:', error);
+      return res.status(500).json({ 
+        applications: DEMO_APPLICATIONS,
+        error: 'Unknown error occurred',
+        debug: `Error: ${JSON.stringify(error)}`
+      });
+    }
   }
 }
