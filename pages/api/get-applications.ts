@@ -48,11 +48,20 @@ export default async function handler(
         hasSpreadsheetId: !!spreadsheetId,
         hasServiceAccountEmail: !!serviceAccountEmail,
         hasPrivateKey: !!privateKey,
-        privateKeyLength: privateKey?.length || 0
+        privateKeyLength: privateKey?.length || 0,
+        spreadsheetId: spreadsheetId || 'UNDEFINED',
+        serviceAccountEmail: serviceAccountEmail || 'UNDEFINED'
       });
       return res.status(200).json({ 
         applications: DEMO_APPLICATIONS,
-        debug: 'No Google credentials - using demo data'
+        debug: 'No Google credentials - using demo data',
+        debugDetails: {
+          hasSpreadsheetId: !!spreadsheetId,
+          hasServiceAccountEmail: !!serviceAccountEmail,
+          hasPrivateKey: !!privateKey,
+          spreadsheetIdValue: spreadsheetId || 'MISSING',
+          serviceAccountEmailValue: serviceAccountEmail || 'MISSING'
+        }
       });
     }
 
