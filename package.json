@@ -1,7 +1,30 @@
 {
   "name": "dashboard-of-failures",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "license": "SEE LICENSE.md",
+  "author": {
+    "name": "Harsha Meghadri",
+    "email": "harshameghadri@gmail.com",
+    "url": "https://linkedin.com/in/harshameghadri"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/harshameghadri/dashboard-of-failures"
+  },
+  "homepage": "https://github.com/harshameghadri/dashboard-of-failures",
+  "description": "A beautiful, professional job application tracking dashboard with Google Sheets integration. Features multiple themes, real-time countdown, and comprehensive analytics.",
+  "keywords": [
+    "job-tracker",
+    "job-applications",
+    "dashboard",
+    "nextjs",
+    "typescript",
+    "google-sheets",
+    "tailwindcss",
+    "recruitment",
+    "career-tracker"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",

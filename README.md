@@ -4,13 +4,15 @@ A transparent, public dashboard for tracking job applications, rejections, and t
 
 ## ✨ Features
 
-- **Real-time Data**: Syncs with Google Sheets for easy data entry
-- **Beautiful Visualizations**: Interactive pie charts and sortable tables
-- **Key Metrics**: Track total applications, rejections, ghosting, and success rate
-- **Wall of Notable Applications**: Highlight special rejections or successes
-- **Dark Theme**: Easy on the eyes during those late-night job hunt sessions
-- **Mobile Responsive**: View your failures on any device
-- **Auto-refresh**: Data updates every 10 minutes via ISR
+- **🎨 Multiple Themes**: Switch between Dark, Dutch Masters (inspired by Vermeer), and Nordic Bright themes
+- **⏰ Unemployment Countdown**: Fun countdown timer to June 1st, 2026
+- **📊 Real-time Data**: Syncs with Google Sheets for easy data entry
+- **📈 Beautiful Visualizations**: Interactive pie charts and sortable tables
+- **📋 Key Metrics**: Track total applications, rejections, ghosting, and success rate
+- **⭐ Wall of Notable Applications**: Highlight special rejections or successes
+- **📱 Mobile Responsive**: View your failures on any device
+- **🔄 Auto-refresh**: Data updates every 10 minutes via ISR
+- **📚 Complete User Guide**: Detailed instructions for non-technical users
 
 ## 🚀 Tech Stack
 
@@ -140,14 +142,29 @@ Update the motivational card content in the main dashboard component.
 
 ## 🤝 Contributing
 
-This is a personal project, but feel free to:
-- Fork and customize for your own job hunt
-- Submit issues for bugs or feature requests
-- Share your own "Dashboard of Failures" stories
+This project welcomes contributions! Feel free to:
+- 🍴 Fork and customize for your own job hunt
+- 🐛 Submit issues for bugs or feature requests
+- 💡 Share your own "Dashboard of Failures" stories
+- 🎨 Submit theme improvements or new themes
+
+**Please note**: All contributions will be subject to the same license terms.
 
 ## 📝 License
 
-MIT License - See [LICENSE](LICENSE) file for details
+**Custom Non-Commercial License** - See [LICENSE.md](LICENSE.md) for full details
+
+### Quick Summary:
+- ✅ **Personal & Educational Use**: Free with attribution required
+- ❌ **Commercial Use**: Requires separate paid license
+- 📧 **Commercial Inquiries**: harshameghadri@gmail.com
+
+**Attribution Required**: Please credit [Harsha Meghadri](https://github.com/harshameghadri) and link to this repository in any use of this code.
+
+### Commercial License Available
+For commercial use, consulting, or custom development:
+- 📧 **Email**: harshameghadri@gmail.com
+- 💼 **LinkedIn**: [linkedin.com/in/harshameghadri](https://linkedin.com/in/harshameghadri)
 
 ## 💡 Inspiration
 

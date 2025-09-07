@@ -30,6 +30,7 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import UnemploymentCountdown from '@/components/UnemploymentCountdown';
+import ThemeToggle from '@/components/ThemeToggle';
 
 interface HomeProps {
   applications: Application[];
@@ -466,7 +467,7 @@ export default function Dashboard({ applications: initialApplications, error }: 
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
+      <ThemeToggle />
       <main className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-8 space-y-8">
           {/* Header Section */}

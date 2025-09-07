@@ -1,9 +1,84 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* Default Dark Theme */
+  :root[data-theme="dark"] {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 142 76% 36%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 142 76% 36%;
+    --radius: 0.5rem;
+  }
+
+  /* Dutch Masters Theme - Inspired by Vermeer's Girl with a Pearl Earring */
+  :root[data-theme="dutch-masters"] {
+    --background: 195 35% 8%;
+    --foreground: 40 85% 95%;
+    --card: 195 25% 12%;
+    --card-foreground: 40 80% 92%;
+    --popover: 195 25% 12%;
+    --popover-foreground: 40 80% 92%;
+    --primary: 43 74% 66%;
+    --primary-foreground: 195 35% 8%;
+    --secondary: 195 20% 18%;
+    --secondary-foreground: 40 70% 88%;
+    --muted: 195 15% 22%;
+    --muted-foreground: 195 8% 65%;
+    --accent: 200 30% 25%;
+    --accent-foreground: 40 75% 90%;
+    --destructive: 0 65% 45%;
+    --destructive-foreground: 40 80% 95%;
+    --border: 195 20% 20%;
+    --input: 195 20% 18%;
+    --ring: 43 74% 66%;
+    --radius: 0.75rem;
+  }
+
+  /* Nordic Bright Theme - Clean and minimal */
+  :root[data-theme="nordic-bright"] {
+    --background: 210 20% 98%;
+    --foreground: 220 14% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 14% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 14% 15%;
+    --primary: 200 100% 45%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 210 40% 95%;
+    --secondary-foreground: 220 14% 25%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 220 14% 45%;
+    --accent: 210 40% 95%;
+    --accent-foreground: 220 14% 25%;
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 200 100% 45%;
+    --radius: 0.375rem;
+  }
+
+  /* Default to dark theme */
   :root {
     --background: 224 71.4% 4.1%;
     --foreground: 210 20% 98%;
@@ -32,7 +107,101 @@
   * {
     @apply border-border;
   }
+
+  /* Default body styling */
   body {
-    @apply bg-background text-foreground font-['Inter'];
+    @apply bg-background text-foreground transition-all duration-300;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Dark theme body */
+  :root[data-theme="dark"] body {
+    font-family: 'Inter', sans-serif;
+    background: hsl(var(--background));
+  }
+
+  /* Dutch Masters theme styling */
+  :root[data-theme="dutch-masters"] body {
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(135deg, 
+      hsl(195, 35%, 6%) 0%,
+      hsl(195, 30%, 10%) 25%,
+      hsl(200, 25%, 8%) 50%,
+      hsl(190, 30%, 12%) 75%,
+      hsl(195, 35%, 8%) 100%);
+    background-attachment: fixed;
+  }
+
+  /* Add subtle texture overlay for Dutch Masters theme */
+  :root[data-theme="dutch-masters"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(43, 74, 66, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(200, 160, 100, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Nordic Bright theme styling */
+  :root[data-theme="nordic-bright"] body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    background: linear-gradient(180deg, 
+      hsl(210, 20%, 100%) 0%,
+      hsl(210, 30%, 98%) 50%,
+      hsl(210, 25%, 96%) 100%);
+    background-attachment: fixed;
+  }
+
+  /* Headings styling for each theme */
+  :root[data-theme="dark"] h1, :root[data-theme="dark"] h2, :root[data-theme="dark"] h3, :root[data-theme="dark"] h4, :root[data-theme="dark"] h5, :root[data-theme="dark"] h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+  }
+
+  :root[data-theme="dutch-masters"] h1, :root[data-theme="dutch-masters"] h2, :root[data-theme="dutch-masters"] h3, :root[data-theme="dutch-masters"] h4, :root[data-theme="dutch-masters"] h5, :root[data-theme="dutch-masters"] h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  :root[data-theme="nordic-bright"] h1, :root[data-theme="nordic-bright"] h2, :root[data-theme="nordic-bright"] h3, :root[data-theme="nordic-bright"] h4, :root[data-theme="nordic-bright"] h5, :root[data-theme="nordic-bright"] h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  /* Monospace font for code/data in Nordic theme */
+  :root[data-theme="nordic-bright"] .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  /* Enhanced card styling for Dutch Masters theme */
+  :root[data-theme="dutch-masters"] .card-enhanced {
+    background: linear-gradient(145deg, 
+      hsl(195, 25%, 14%) 0%,
+      hsl(195, 20%, 12%) 100%);
+    border: 1px solid hsl(43, 74%, 66%, 0.2);
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.3),
+      0 2px 4px -1px rgba(43, 74, 66, 0.1),
+      inset 0 1px 0 rgba(200, 160, 100, 0.1);
+  }
+
+  /* Enhanced card styling for Nordic theme */
+  :root[data-theme="nordic-bright"] .card-enhanced {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid hsl(214, 32%, 91%);
+    box-shadow: 
+      0 1px 3px 0 rgba(0, 0, 0, 0.1),
+      0 1px 2px 0 rgba(0, 0, 0, 0.06);
   }
 }
