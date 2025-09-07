@@ -29,6 +29,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
+import UnemploymentCountdown from '@/components/UnemploymentCountdown';
 
 interface HomeProps {
   applications: Application[];
@@ -510,6 +511,11 @@ export default function Dashboard({ applications: initialApplications, error }: 
               icon={<Target className="h-4 w-4 text-muted-foreground" />}
               description="Offers received"
             />
+          </div>
+
+          {/* Unemployment Countdown */}
+          <div className="flex justify-center">
+            <UnemploymentCountdown className="w-full max-w-md" />
           </div>
 
           {/* Main Content */}
